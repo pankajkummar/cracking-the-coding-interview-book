@@ -17,13 +17,14 @@ public class TripleStep {
         if(n==0) return 1;
 
         return countWays(n-1)+countWays(n-2)+ countWays(n-3);
+//comment using the keyboard
 
     }
 
     public static void main(String[] args) {
 
         TripleStep ts = new TripleStep();
-        int n=40;
+        int n=50;
         int[] memo = new int[n+1];
         Arrays.fill(memo,-1);
         long startTime = System.currentTimeMillis();
