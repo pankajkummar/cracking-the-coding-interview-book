@@ -3,42 +3,68 @@ package com.coding.cracking_the_coding_interview_book.chapter_16_moderate;
 import java.util.Stack;
 
 public class CalculatorString {
-    public static int calculate(String str){
-        Stack<Integer> numbers = new Stack<>();
-        Stack<String> operations = new Stack<>();
+    public static float calculate(String str){
+        Stack<Float> numbers = new Stack<>();
+        Stack<Character> operations = new Stack<>();
         StringBuilder sb = new StringBuilder();
-        for(char c: str.toCharArray()){
-            if(Character.isDigit(c)){
-                sb.append(c);
-            }
-            else{
-                numbers.add(Integer.parseInt(sb.toString()));
-                operations.add(String.valueOf(c));
-                sb.setLength(0);
+        for (char c : str.toCharArray()) {
+            if (Character.isDigit(c)) {
+                sb.append(c); // Build the number
+            } else if (c == ' ') {
+                continue; // Ignore spaces
+            } else {
+                if (sb.length() > 0) {
+                    numbers.push(Float.parseFloat(sb.toString()));
+                    sb.setLength(0); // Reset StringBuilder
+                }
 
+                // Handle operator precedence
+                while (!operations.isEmpty() && precedence(c) <= precedence(operations.peek())) {
+                    float b = numbers.pop();
+                    float a = numbers.pop();
+                    char op = operations.pop();
+                    numbers.push(applyOperator(op, a, b));
+                }
+
+                operations.push(c); // Push the current operator
             }
         }
-        return 1;
+
+        // Push the last number if any
+        if (sb.length() > 0) {
+            numbers.push(Float.parseFloat(sb.toString()));
+        }
+        while(!operations.isEmpty()){
+            float b = numbers.pop();
+            float a = numbers.pop();
+            char op = operations.pop();
+            numbers.push(applyOperator(op,a,b));
+        }
+        return numbers.pop();
     }
-   public static void multiplyAndDivide(Stack<Integer> number ,Stack<String> operation){
-        float firstNumber = number.pop();
-        Stack<Float> number2 = new Stack<>();
-        Stack<String> operation2 = new Stack<>();
-        while(!operation.isEmpty()){
-            float secondNumber = number.pop();
-            String op = operation.pop();
-            if(op=="*"){
-                Float num = firstNumber*secondNumber;
-                number2.add(num);
-            }
-            if(op=="/"){
-                float num = firstNumber/secondNumber;
-            }
-
+   public static float applyOperator(char op ,float a, float b){
+        switch (op){
+            case '+':
+                return a+b;
+            case '-':
+                return a-b;
+            case '*':
+                return a*b;
+            case '/':
+                return a/b;
         }
+        return 0;
    }
+    private static int precedence(char op) {
+        if (op == '+' || op == '-') {
+            return 1;
+        } else if (op == '*' || op == '/') {
+            return 2;
+        }
+        return 0;
+    }
     public static void main(String[] args) {
-        String s = "2*3/5+567+54-3";
-        calculate(s);
+        String s = "2*3+5/6*3+15";
+        System.out.println(calculate(s));
     }
 }
