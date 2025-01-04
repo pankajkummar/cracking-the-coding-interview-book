@@ -30,7 +30,6 @@ public class LettersAndNumbers {
         }
         return Arrays.copyOfRange(arr,subArrayIndex,subArrayIndex+subArrayLength);
     }
-
     public static void main(String[] args) {
         char[] arr= {'4','a', '1', '2', 'c', 'd', '3'};
         System.out.println(Arrays.toString(subArray(arr)));
