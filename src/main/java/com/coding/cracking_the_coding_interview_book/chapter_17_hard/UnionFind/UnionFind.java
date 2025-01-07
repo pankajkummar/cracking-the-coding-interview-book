@@ -33,9 +33,9 @@ public class UnionFind<T> {
         if(!root1.equals(root2)) {
             int rank1 = rank.get(root1);
             int rank2 = rank.get(root2);
-            if (rank1 < rank2) {
+            if (rank1 > rank2) {
                 parent.put(root2, root1);
-            } else if (rank1 > rank2) {
+            } else if (rank1 < rank2) {
                 parent.put(root1, root2);
             } else {
                 parent.put(root2, root1);
