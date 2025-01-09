@@ -8,7 +8,7 @@ public class WordDistance {
     public static HashMap<String, List<Integer>> createMap(String[] file){
         HashMap<String, List<Integer>> map = new HashMap<>();
         for( int i=0; i<file.length; i++){
-            map.putIfAbsent(file[i],map.getOrDefault(file[i], new ArrayList<>()));
+            map.putIfAbsent(file[i], new ArrayList<>());
             map.get(file[i]).add(i);
         }
         return map;
@@ -17,11 +17,16 @@ public class WordDistance {
         List<Integer> word1Index = map.get(word1);
         List<Integer> word2Index = map.get(word2);
         int distance = Integer.MAX_VALUE;
-        for(int i: word1Index){
-            for(int j: word2Index){
-                if(Math.abs(i-j)<distance){
-                    distance = Math.abs(i-j);
-                }
+        int index1=0;
+        int index2=0;
+        while (index1<word1Index.size() && index2<word2Index.size()){
+
+            distance = Math.min(distance,Math.abs(word1Index.get(index1)- word2Index.get(index2)));
+
+            if(word1Index.get(index1)<word2Index.get(index2)){
+                index1++;
+            }else{
+                index2++;
             }
         }
         return distance;
