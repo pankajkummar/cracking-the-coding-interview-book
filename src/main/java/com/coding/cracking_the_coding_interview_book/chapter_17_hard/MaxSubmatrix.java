@@ -58,7 +58,7 @@ public class MaxSubmatrix {
                 {-5, -9,  4,  6, -2},
                 { 7, -3,  8, -1,  0}
         };
-        //System.out.println(Arrays.deepToString(calculateDpMatrix(matrix)));
-        System.out.println(Arrays.toString(findMaxSubmatrix(matrix)));
+        System.out.println(Arrays.deepToString(calculateDpMatrix(matrix)));
+      //  System.out.println(Arrays.toString(findMaxSubmatrix(matrix)));
     }
 }
